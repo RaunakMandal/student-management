@@ -7,10 +7,14 @@ class Student():
         self.cgpa = cgpa
 
 
-class StudentManagement:
+class StudentManagement():
     def __init__(self):
         self.students = []
+    
+    def clear_students(self):
+        self.students = []
 
+    # This method validates if the input is empty or not and raises an exception if it is empty
     def validate_empty_input(self, value):
         if value:
             return value
@@ -18,9 +22,12 @@ class StudentManagement:
             raise Exception("Input cannot be empty")
 
     def validate_unique_name(self, name):
+        # First validate, if the input is empty or not
         self.validate_empty_input(name)
 
+        # Now it validates if the name is alphabets or not, then it checks if the name already exists or not
         if name.isalpha():
+            print("Name is alphabets")
             for student in self.students:
                 if student.name == name:
                     raise Exception("Name already exists")
@@ -28,6 +35,7 @@ class StudentManagement:
         else:
             raise Exception("Name must be alphabets")
 
+    # This method does the same thing as validate_unique_name, but for roll
     def validate_unique_roll(self, roll):
         self.validate_empty_input(roll)
 
@@ -37,6 +45,7 @@ class StudentManagement:
         return roll
 
     def accept_student(self, name=None, age=None, roll=None, year=None, cgpa=None):
+        # This validates the input and returns the validated input if there is no error
         name = self.validate_unique_name(name)
         age = self.validate_empty_input(age)
         roll = self.validate_unique_roll(roll)
@@ -45,6 +54,7 @@ class StudentManagement:
 
         student = Student(name, age, roll, year, cgpa)
         self.students.append(student)
+        return
 
     def display_students(self):
         students = ""
@@ -74,6 +84,3 @@ class StudentManagement:
                 student.cgpa = cgpa
                 return
         return "Student not found"
-    
-    def clear_students(self):
-        self.students = []

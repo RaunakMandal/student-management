@@ -64,3 +64,23 @@ class TestStudentManagement():
         student_mgmt.accept_student("Raj", 20, 1, 1, 8.5)
         student_mgmt.accept_student("Raunak", 20, 2, 1, 8.5)
         assert student_mgmt.update_student(5, "Karan", 20, 1, 8.5) == "Student not found"
+
+    # Tests for the Validation methods
+    def test_validate_name(self):
+        student_mgmt.clear_students()
+        student_mgmt.accept_student("Raj", 20, 1, 1, 8.5)
+        student_mgmt.accept_student("Raunak", 20, 2, 1, 8.5)
+        assert student_mgmt.validate_unique_name("Testing")
+    
+    def test_validate_name_failure(self):
+        with pytest.raises(Exception):
+            student_mgmt.clear_students()
+            student_mgmt.accept_student("Raj", 20, 1, 1, 8.5)
+            student_mgmt.accept_student("Raunak", 20, 2, 1, 8.5)
+            assert student_mgmt.validate_unique_name("123")
+            assert student_mgmt.validate_unique_name("Raj123")
+
+    def test_validate_empty_input(self):
+        with pytest.raises(Exception):
+            assert student_mgmt.validate_empty_input(0)
+            assert student_mgmt.validate_empty_input("")
